@@ -3,7 +3,8 @@
 A ready-to-open Mitey **workspace** demonstrating every protocol and feature
 against the local mock API stack: HTTP basics, auth (API key / Bearer / Basic /
 OAuth2), folder inheritance, TLS / mTLS, WebSocket, gRPC, MCP, raw / form /
-multipart / binary-file / GraphQL request bodies, and pre/post-request scripting (`mt.*`).
+multipart / binary-file / GraphQL request bodies, pre/post-request scripting (`mt.*`), and
+letting an AI agent use your secrets without seeing them.
 
 This folder is a self-contained, **relocatable** workspace — clone it anywhere and
 open it in Mitey (File → Open folder). It contains no machine-specific paths.
@@ -80,6 +81,35 @@ a request and look at its **Pre-request** / **Post-request** script tabs; the Te
   value from the response and `mt.environment.set("requestId", …)`; Chain 2 reads it back as
   `{{requestId}}` (run them in order). Chain 2's pre-request script fails fast if it's run
   first.
+
+## AI agents (MCP): use secrets without seeing them
+
+The **`AI Agents/`** folder is a walkthrough of what Mitey lets an AI agent do with your
+credentials. The agent can use them, but it never sees a value. Connect an agent first
+(status bar → **Connect MCP**), keep Mitey open, select the **Local** environment, and
+ask the agent to run the requests **in order**. Everything you approve shows up under
+**Connect MCP → Secrets** and **Writes**, and every call under **Activity**.
+
+1. **Log in and capture the token**: a client-credentials login against the mock OAuth
+   server. Its **Settings → AI agents** hides the response from agents (they get only
+   its shape) and saves `access_token` into the secret **`{{agentToken}}`**.
+   - It's a POST, so Mitey first asks whether the agent may run it. Answer **Always
+     allow**.
+   - The token is saved only once you approve the request. It appears under **Secrets →
+     Waiting for approval** with what it would save. Approve it, and ask the agent to run
+     it again.
+2. **Use the token**: Bearer `{{agentToken}}` against `/bearer`. It answers 401 until you
+   approve it (which allows the token to go to `http://localhost:8080`), and 200 after.
+3. **Echo the token back**: sends it in a header to `/anything`, which reflects every
+   header. The agent sees `***` where the token was.
+4. **Token in the query string**: query strings are often echoed or logged, so approving
+   this one needs an extra confirmation.
+5. **Delete something**: a DELETE, so Mitey asks before it runs (Allow once, for this
+   session, always, or deny).
+
+`{{agentToken}}` starts empty: requests 2–4 only carry it once request 1 has captured it.
+Approvals and bindings live in Mitey's app data, not in this workspace, so a fresh clone
+starts with nothing approved.
 
 ## How file paths stay relocatable
 

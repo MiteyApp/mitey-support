@@ -1,0 +1,6 @@
+id: 7c1d4e2a-5b8f-4f0e-9a61-3d2c8b7e4a03
+name: 3 Echo the token back
+method: GET
+url: "{{baseUrl}}/anything"
+headers:
+  - { key: X-Demo-Token, value: "{{agentToken}}", enabled: true }

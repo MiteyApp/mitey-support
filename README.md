@@ -35,6 +35,10 @@ Mitey supports, all targeting the local mock API stack:
 - **Scripting** — pre/post-request scripts via Mitey's native `mt.*` API (with
   `pm.*` available as a Postman-compatible alias): setting variables, assertions
   (`mt.test` / `mt.expect`), and capturing a value in one request to reuse in another.
+- **AI Agents** — a numbered walkthrough of letting an AI agent use your credentials
+  without seeing them: a login whose token is captured into the vault, requests that use
+  it (sent once you approve, masked when echoed back), a risky query-string placement,
+  and a DELETE that asks first. See the workspace README for the steps.
 
 The folder contains no machine-specific paths — clone it anywhere and it just works.
 
@@ -94,8 +98,11 @@ claude mcp add mitey --scope user -- \
 Keep `--scope user` — without it the server is registered for the current directory only,
 and `/mcp` will come up empty everywhere else.
 
-Secrets are redacted and scripts don't run over MCP; authoring is opt-in
-(`--allow-write`). See the [MCP server docs](https://docs.mitey.app/mcp-server).
+The agent never sees a secret value. Requests you approve in Mitey send your secrets on
+its behalf, only to the hosts you allowed. Writes (POST, PUT, DELETE…) can wait for your
+answer, and scripts don't run over MCP. Try it with the **AI Agents** folder. Authoring
+is opt-in (`--allow-write`). See the
+[MCP server docs](https://docs.mitey.app/mcp-server).
 
 ### How paths stay relocatable
 
