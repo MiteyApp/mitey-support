@@ -1,0 +1,16 @@
+id: 7c1d4e2a-5b8f-4f0e-9a61-3d2c8b7e4a01
+name: 1 Log in and capture the token
+method: POST
+url: "{{oauthBaseUrl}}/default/token"
+body:
+  kind: formUrlencoded
+  fields:
+    - { key: grant_type, value: client_credentials, enabled: true }
+    - { key: client_id, value: mitey-agent-demo, enabled: true }
+    - { key: client_secret, value: demo-secret, enabled: true }
+# For AI agents: the agent sees only the response's shape, and the access token is
+# saved into the secret {{agentToken}} (needs approval under Connect MCP → Secrets).
+agentOutput:
+  secret: true
+  capture:
+    - { from: body, path: /access_token, into: agentToken }
