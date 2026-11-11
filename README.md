@@ -6,7 +6,7 @@ not Electron). It hosts the ready-to-open example workspaces below, and its
 [**issue tracker**](https://github.com/TheImpostorApp/support/issues) is where to report
 bugs or ask for help.
 
-Clone this repo, open a workspace folder in Mitey (**File → Open folder**), and start
+Clone this repo, open a workspace folder in Mitey (**File → Open Workspace…**), and start
 sending requests. There are two:
 [`mock-workspace/`](mock-workspace/) for a tour of every feature (it needs the Docker mock
 backend bundled here in [`mock-server/`](mock-server/), so this repo is fully
@@ -58,7 +58,7 @@ Stop it with `docker compose down` (add `-v` to also drop the cert volume). See
 
 ### Usage
 
-1. In Mitey, **Open folder** → select the `mock-workspace/` directory.
+1. In Mitey, **Open workspace** → select the `mock-workspace/` directory.
 2. Pick the **Local** environment.
 3. Send any request.
 

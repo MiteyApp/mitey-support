@@ -14,7 +14,7 @@ Two things it is good for:
   folder-inherited headers and variables, dynamic variables, and post-request tests.
 
 This folder is self-contained and **relocatable** — clone it anywhere and open it
-(File → Open folder). It contains no machine-specific paths and no secrets.
+(File → Open Workspace…). It contains no machine-specific paths and no secrets.
 
 ## Method mix
 
