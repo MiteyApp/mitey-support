@@ -6,7 +6,7 @@ OAuth2), folder inheritance, TLS / mTLS, WebSocket, gRPC, MCP, raw / form /
 multipart / binary-file / GraphQL request bodies, and pre/post-request scripting (`mt.*`).
 
 This folder is a self-contained, **relocatable** workspace — clone it anywhere and
-open it in Mitey (File → Open folder). It contains no machine-specific paths.
+open it in Mitey (File → Open Workspace…). It contains no machine-specific paths.
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ etc.). Start it first — see the [`mock/`](../../mock/README.md) stack:
 cd mock && docker compose up -d
 ```
 
-Then in Mitey: **Open folder** → select this `mock-workspace` directory, pick the
+Then in Mitey: **Open workspace** → select this `mock-workspace` directory, pick the
 **Local** environment, and send any request.
 
 **Exception:** `Realtime/MCP` doesn't use the mock stack at all — it spawns the
