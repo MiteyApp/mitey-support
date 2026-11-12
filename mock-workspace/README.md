@@ -4,7 +4,7 @@ A ready-to-open Mitey **workspace** demonstrating every protocol and feature
 against the local mock API stack: HTTP basics, auth (API key / Bearer / Basic /
 OAuth2), folder inheritance, TLS / mTLS, WebSocket, gRPC, MCP, raw / form /
 multipart / binary-file / GraphQL request bodies, pre/post-request scripting (`mt.*`), and
-letting an AI agent use your secrets without seeing them.
+letting an AI agent use your secrets without Mitey ever giving it their values.
 
 This folder is a self-contained, **relocatable** workspace — clone it anywhere and
 open it in Mitey (File → Open Workspace…). It contains no machine-specific paths.
@@ -82,10 +82,10 @@ a request and look at its **Pre-request** / **Post-request** script tabs; the Te
   `{{requestId}}` (run them in order). Chain 2's pre-request script fails fast if it's run
   first.
 
-## AI agents (MCP): use secrets without seeing them
+## AI agents (MCP): use secrets without being given them
 
 The **`AI Agents/`** folder is a walkthrough of what Mitey lets an AI agent do with your
-credentials. The agent can use them, but it never sees a value. Connect an agent first
+credentials. The agent can use them, but Mitey never gives it a value. Connect an agent first
 (status bar → **Connect MCP**), keep Mitey open, select the **Local** environment, and
 ask the agent to run the requests **in order**. Everything you approve shows up under
 **Connect MCP → Secrets** and **Writes**, and every call under **Activity**.

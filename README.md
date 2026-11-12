@@ -36,7 +36,7 @@ Mitey supports, all targeting the local mock API stack:
   `pm.*` available as a Postman-compatible alias): setting variables, assertions
   (`mt.test` / `mt.expect`), and capturing a value in one request to reuse in another.
 - **AI Agents** — a numbered walkthrough of letting an AI agent use your credentials
-  without seeing them: a login whose token is captured into the vault, requests that use
+  without Mitey ever giving it their values: a login whose token is captured into the vault, requests that use
   it (sent once you approve, masked when echoed back), a risky query-string placement,
   and a DELETE that asks first. See the workspace README for the steps.
 
@@ -98,7 +98,7 @@ claude mcp add mitey --scope user -- \
 Keep `--scope user` — without it the server is registered for the current directory only,
 and `/mcp` will come up empty everywhere else.
 
-The agent never sees a secret value. Requests you approve in Mitey send your secrets on
+Mitey never gives an agent a secret's value. Requests you approve in Mitey send your secrets on
 its behalf, only to the hosts you allowed. Writes (POST, PUT, DELETE…) can wait for your
 answer, and scripts don't run over MCP. Try it with the **AI Agents** folder. Authoring
 is opt-in (`--allow-write`). See the
