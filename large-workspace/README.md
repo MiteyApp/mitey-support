@@ -123,7 +123,7 @@ repo at `scripts/gen-large-workspace.mjs` and is deterministic — a re-run with
 unchanged script reproduces the tree byte for byte:
 
 ```sh
-node scripts/gen-large-workspace.mjs --out ../impostor-support/large-workspace
+node scripts/gen-large-workspace.mjs --out ../mitey-support/large-workspace
 ```
 
 Edit the generator rather than the 1000 files. This `README.md` is hand-written and is

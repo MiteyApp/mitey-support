@@ -3,7 +3,7 @@
 The support home for [**Mitey**](https://mitey.app/), a fast, local, cross-platform
 API client (a lightweight, native alternative to Postman built on Tauri v2 + SvelteKit,
 not Electron). It hosts the ready-to-open example workspaces below, and its
-[**issue tracker**](https://github.com/TheImpostorApp/support/issues) is where to report
+[**issue tracker**](https://github.com/MiteyApp/mitey-support/issues) is where to report
 bugs or ask for help.
 
 Clone this repo, open a workspace folder in Mitey (**File → Open Workspace…**), and start
