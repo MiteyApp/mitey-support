@@ -1,0 +1,54 @@
+id: 91b6c27e-e3a8-4fd0-a07e-8cbd3ef56a77
+name: Submission lifecycle
+description: Log in, create a submission, upload its files, wait until it's processed, submit it, and notify a flaky endpoint.
+# The workflow's own variables. `title: fail` makes processing fail.
+variables:
+- key: title
+  value: Quarterly report {{$timestamp}}
+  enabled: true
+  secret: false
+  script: false
+  reference: ''
+- key: files
+  value: '["report.pdf", "appendix.pdf"]'
+  enabled: true
+  secret: false
+  script: false
+  reference: ''
+- key: requestId
+  value: '{{$guid}}'
+  enabled: true
+  secret: false
+  script: false
+  reference: ''
+steps:
+- id: log-in
+  request: 3b0f6c1e-8d42-4f7a-9a1e-2c5d7e9f0a11
+  extract:
+  - { name: token, from: body, path: /token, secret: true }
+- id: create
+  request: 4c1a7d2f-9e53-4a8b-8b2f-3d6e8fa01b22
+  expect: { status: [201] }
+  extract:
+  - { name: submissionId, from: body, path: /id }
+- id: upload
+  request: 5d2b8e3a-af64-4b9c-9c3a-4e7f9ab12c33
+  forEach: { items: files, as: file, concurrency: 2 }
+  extract:
+  - { name: uploaded, from: body, path: /name }
+- id: wait
+  request: 6e3c9f4b-b075-4cad-8d4b-5f8a0bc23d44
+  after: [upload]
+  poll:
+    until: { all: [{ from: body, path: /status, op: eq, value: done }] }
+    failIf: { all: [{ from: body, path: /status, op: eq, value: failed }] }
+    intervalMs: 1000
+    timeoutMs: 30000
+- id: submit
+  request: 7f4da05c-c186-4dbe-9e5c-6a9b1cd34e55
+  after: [wait]
+  extract:
+  - { name: receipt, from: body, path: /receipt }
+- id: notify
+  request: 80a5b16d-d297-4ecf-8f6d-7bac2de45f66
+  retry: { attempts: 4, delayMs: 500, backoff: exponential, maxDelayMs: 5000, on: [network, 5xx, 429] }

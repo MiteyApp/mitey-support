@@ -39,13 +39,18 @@ Mitey supports, all targeting the local mock API stack:
   without Mitey ever giving it their values: a login whose token is captured into the vault, requests that use
   it (sent once you approve, masked when echoed back), a risky query-string placement,
   and a DELETE that asks first. See the workspace README for the steps.
+- **Workflow Demo** + the **Submission lifecycle** workflow (`.flows/`) — requests chained
+  by the values they pass along: log in, create a submission, upload files (one step per
+  file), poll until it's processed, submit, then retry a flaky endpoint. Its own variables
+  include a `{{$guid}}` request id, generated once per run and shared by every step. Open
+  it from the sidebar's **Workflows** section and press **Run**.
 
 The folder contains no machine-specific paths — clone it anywhere and it just works.
 
 ### Prerequisites
 
 The requests target the Mitey mock backend (`http://localhost:8080`,
-`https://localhost:8443`, etc.), bundled in [`mock-server/`](mock-server/). Start it
+`http://localhost:8090`, `https://localhost:8443`, etc.), bundled in [`mock-server/`](mock-server/). Start it
 before sending requests:
 
 ```sh
@@ -159,12 +164,14 @@ and how to regenerate it.
 
 A one-command Docker backend (`docker compose up -d`) that exercises every Mitey
 feature the workspace touches: REST, the auth schemes, OAuth2/OIDC, mTLS, WebSocket, SSE,
-and gRPC. Built from pinned upstream images plus a small nginx for the mTLS endpoint.
+gRPC, and workflows. Built from pinned upstream images, a small nginx for the mTLS
+endpoint, and a tiny Python job API (`jobs/server.py`) for workflows.
 
 | URL | Service | What it's for |
 |-----|---------|---------------|
 | `http://localhost:8080` | go-httpbin | REST, auth (Basic/Bearer), WebSocket, SSE |
 | `http://localhost:8081` | mock-oauth2-server | OAuth2 / OIDC flows |
+| `http://localhost:8090` | jobs | Workflows: a stateful job API to chain, poll and retry |
 | `localhost:9000` / `9001` | grpcbin | gRPC (plaintext / TLS), with reflection |
 | `https://localhost:8443` | nginx (mTLS) | client-cert-required TLS → httpbin |
 | `https://localhost:8444` | nginx (TLS only) | plain TLS w/ custom CA → httpbin |

@@ -1,0 +1,8 @@
+id: 4c1a7d2f-9e53-4a8b-8b2f-3d6e8fa01b22
+name: Create submission
+method: POST
+url: "{{jobsBaseUrl}}/submissions"
+body:
+  kind: raw
+  contentType: application/json
+  content: '{ "title": "{{title}}" }'

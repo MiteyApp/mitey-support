@@ -20,6 +20,16 @@ services:
       SERVER_PORT: "8080"
     restart: unless-stopped
 
+  # Stateful job API for workflows: login → create → upload → poll until processed →
+  # submit, plus an endpoint that fails twice before succeeding (retry). See jobs/server.py.
+  jobs:
+    image: python:3.12-alpine
+    command: ["python", "-u", "/app/server.py"]
+    ports: ["8090:8090"]
+    volumes:
+      - ./jobs:/app:ro
+    restart: unless-stopped
+
   # gRPC test service with reflection + all four call types (9000 plaintext, 9001 TLS).
   grpcbin:
     image: moul/grpcbin:latest

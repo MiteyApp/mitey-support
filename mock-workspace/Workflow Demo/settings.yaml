@@ -1,0 +1,7 @@
+# Every request here authenticates with the token the Log in step extracts — through
+# this folder's auth, which is how the workflow knows they run after it.
+auth: { type: bearer, token: "{{token}}" }
+# One id for the whole run: {{$guid}} is generated once per workflow run, so every step
+# sends the same X-Request-Id.
+headers:
+  - { key: X-Request-Id, value: "{{requestId}}", enabled: true }

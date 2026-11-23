@@ -1,0 +1,4 @@
+id: 80a5b16d-d297-4ecf-8f6d-7bac2de45f66
+name: Notify (flaky)
+method: GET
+url: "{{jobsBaseUrl}}/flaky?key={{receipt}}"

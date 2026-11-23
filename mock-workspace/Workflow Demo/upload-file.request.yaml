@@ -1,0 +1,8 @@
+id: 5d2b8e3a-af64-4b9c-9c3a-4e7f9ab12c33
+name: Upload file
+method: PUT
+url: "{{jobsBaseUrl}}/submissions/{{submissionId}}/files/{{file}}"
+body:
+  kind: raw
+  contentType: text/plain
+  content: contents of {{file}}

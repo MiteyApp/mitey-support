@@ -1,0 +1,5 @@
+id: 3b0f6c1e-8d42-4f7a-9a1e-2c5d7e9f0a11
+name: Log in
+method: POST
+url: "{{jobsBaseUrl}}/login"
+auth: { type: none }
