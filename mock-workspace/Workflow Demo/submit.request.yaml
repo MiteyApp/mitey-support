@@ -1,0 +1,4 @@
+id: 7f4da05c-c186-4dbe-9e5c-6a9b1cd34e55
+name: Submit
+method: POST
+url: "{{jobsBaseUrl}}/submissions/{{submissionId}}/submit"

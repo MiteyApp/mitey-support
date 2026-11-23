@@ -1,0 +1,3 @@
+# Every request here authenticates with the token the Log in step extracts — through
+# this folder's auth, which is how the workflow knows they run after it.
+auth: { type: bearer, token: "{{token}}" }

@@ -1,0 +1,4 @@
+id: 6e3c9f4b-b075-4cad-8d4b-5f8a0bc23d44
+name: Submission status
+method: GET
+url: "{{jobsBaseUrl}}/submissions/{{submissionId}}"

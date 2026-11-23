@@ -31,6 +31,25 @@ GraphQL service, so these target the free public [Countries GraphQL
 API](https://countries.trevorblades.com/) (no auth). Repoint them at any GraphQL endpoint
 by editing the **`gqlBaseUrl`** variable in the **Local** environment.
 
+## Workflows
+
+The **Submission lifecycle** workflow (sidebar → **Workflows**, stored in
+`.flows/submission-lifecycle.flow.yaml`) chains the requests in **`Workflow Demo/`**
+against the mock stack's job API (`http://localhost:8090`, the `jobsBaseUrl` variable):
+
+1. **Log in** — extracts `token` (marked secret). The folder's auth sends it as a Bearer
+   token, which is all it takes for every later step to run after this one.
+2. **Create submission** — expects `201`, extracts `submissionId`.
+3. **Upload file** — repeats for each name in the `files` input, two at a time.
+4. **Submission status** — polls every second until `status` is `done` (fails early on
+   `failed`; set the `title` input to `fail` to see it).
+5. **Submit** — extracts `receipt`.
+6. **Notify (flaky)** — fails twice with `503` and `Retry-After: 1`, then succeeds; the
+   step retries up to four times.
+
+Press **Run** and watch it go, or run it headless:
+`mitey run "Submission lifecycle" --workspace . --env Local`.
+
 ## TLS / mTLS
 
 The **`TLS/`** folder targets the mock stack's mTLS listener (`https://localhost:8443`).

@@ -30,6 +30,7 @@ bundle's `.assets/certs/` (the script prints this reminder).
 |-----|---------|---------------|
 | `http://localhost:8080` | go-httpbin | REST, auth (Basic/Bearer), WebSocket, SSE |
 | `http://localhost:8081` | mock-oauth2-server | OAuth2 / OIDC flows |
+| `http://localhost:8090` | jobs (`jobs/server.py`) | Workflows: a stateful job API to chain, poll and retry |
 | `localhost:9000` / `localhost:9001` | grpcbin | gRPC (plaintext / TLS), with reflection |
 | `https://localhost:8443` | nginx (mTLS) | client-cert-required TLS → httpbin |
 | `https://localhost:8444` | nginx (TLS only) | plain TLS w/ custom CA → httpbin |
@@ -46,6 +47,20 @@ bundle's `.assets/certs/` (the script prints this reminder).
 | Redirects | `GET http://localhost:8080/redirect/3` |
 | Latency / size | `GET http://localhost:8080/delay/2` · `/bytes/100000` |
 | Cookies | `GET http://localhost:8080/cookies/set?session=abc` |
+
+### Workflows (`http://localhost:8090`)
+A small in-memory job API (`jobs/server.py`, Python stdlib) for chaining requests:
+
+| Endpoint | Behaviour |
+|----------|-----------|
+| `POST /login` | `{"token": …}` — send it as a Bearer token to everything below |
+| `POST /submissions` | `201 {"id": "sub-…", "status": "processing"}` (title `fail` makes it fail) |
+| `PUT /submissions/{id}/files/{name}` | stores a file name |
+| `GET /submissions/{id}` | `status` turns `done` 4 s after the first upload (`PROCESSING_SECONDS`) — poll it |
+| `POST /submissions/{id}/submit` | `{"receipt": …}`, or `409` until the submission is done |
+| `GET /flaky?key=…` | `503` with `Retry-After: 1` twice per key, then `200` — retry it |
+
+The example workspace's **Submission lifecycle** workflow runs the whole chain.
 
 ### WebSocket
 Open the **WS** panel → `ws://localhost:8080/websocket/echo` → send a message, see it echoed.
