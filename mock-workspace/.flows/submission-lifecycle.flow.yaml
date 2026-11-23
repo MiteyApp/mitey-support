@@ -1,13 +1,26 @@
 id: 91b6c27e-e3a8-4fd0-a07e-8cbd3ef56a77
 name: Submission lifecycle
 description: Log in, create a submission, upload its files, wait until it's processed, submit it, and notify a flaky endpoint.
-inputs:
-- name: title
-  default: Quarterly report
-  description: The submission's title ("fail" makes processing fail).
-- name: files
-  default: '["report.pdf", "appendix.pdf"]'
-  description: A JSON list of file names to upload.
+# The workflow's own variables. `title: fail` makes processing fail.
+variables:
+- key: title
+  value: Quarterly report {{$timestamp}}
+  enabled: true
+  secret: false
+  script: false
+  reference: ''
+- key: files
+  value: '["report.pdf", "appendix.pdf"]'
+  enabled: true
+  secret: false
+  script: false
+  reference: ''
+- key: requestId
+  value: '{{$guid}}'
+  enabled: true
+  secret: false
+  script: false
+  reference: ''
 steps:
 - id: log-in
   request: 3b0f6c1e-8d42-4f7a-9a1e-2c5d7e9f0a11

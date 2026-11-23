@@ -41,8 +41,9 @@ Mitey supports, all targeting the local mock API stack:
   and a DELETE that asks first. See the workspace README for the steps.
 - **Workflow Demo** + the **Submission lifecycle** workflow (`.flows/`) — requests chained
   by the values they pass along: log in, create a submission, upload files (one step per
-  file), poll until it's processed, submit, then retry a flaky endpoint. Open it from the
-  sidebar's **Workflows** section and press **Run**.
+  file), poll until it's processed, submit, then retry a flaky endpoint. Its own variables
+  include a `{{$guid}}` request id, generated once per run and shared by every step. Open
+  it from the sidebar's **Workflows** section and press **Run**.
 
 The folder contains no machine-specific paths — clone it anywhere and it just works.
 

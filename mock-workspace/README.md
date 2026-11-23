@@ -40,12 +40,16 @@ against the mock stack's job API (`http://localhost:8090`, the `jobsBaseUrl` var
 1. **Log in** — extracts `token` (marked secret). The folder's auth sends it as a Bearer
    token, which is all it takes for every later step to run after this one.
 2. **Create submission** — expects `201`, extracts `submissionId`.
-3. **Upload file** — repeats for each name in the `files` input, two at a time.
+3. **Upload file** — repeats for each name in the `files` workflow variable, two at a time.
 4. **Submission status** — polls every second until `status` is `done` (fails early on
-   `failed`; set the `title` input to `fail` to see it).
+   `failed`; set the `title` workflow variable to `fail` to see it).
 5. **Submit** — extracts `receipt`.
 6. **Notify (flaky)** — fails twice with `503` and `Retry-After: 1`, then succeeds; the
    step retries up to four times.
+
+The workflow's own variables (**Variables** in its tab) hold `title`, `files` and a
+`requestId` of `{{$guid}}`. Dynamic values are generated once per run, so every step sends
+the same `X-Request-Id`.
 
 Press **Run** and watch it go, or run it headless:
 `mitey run "Submission lifecycle" --workspace . --env Local`.
