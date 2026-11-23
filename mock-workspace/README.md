@@ -47,7 +47,7 @@ against the mock stack's job API (`http://localhost:8090`, the `jobsBaseUrl` var
 6. **Notify (flaky)** — fails twice with `503` and `Retry-After: 1`, then succeeds; the
    step retries up to four times.
 
-The workflow's own variables (**Variables** in its tab) hold `title`, `files` and a
+The workflow's own variables (its **Variables** tab) hold `title`, `files` and a
 `requestId` of `{{$guid}}`. Dynamic values are generated once per run, so every step sends
 the same `X-Request-Id`.
 
